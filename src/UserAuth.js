@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TextField, Button, Grid } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserAuth = ({ switchToLogin }) => {
   const [userId, setUserId] = useState("");
@@ -18,8 +20,9 @@ const UserAuth = ({ switchToLogin }) => {
   const handleCancelPassword = () => setPassword("");
   const handleCancelFirstName = () => setFirstName("");
   const handleCancelLastName = () => setLastName("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
       userId,      // From state
@@ -29,12 +32,14 @@ const UserAuth = ({ switchToLogin }) => {
     };
   
     try {
-      const response = await axios.post('http://localhost:3000', userData);
+      const response = await axios.post('http://localhost:5000', userData);
       alert(response.data); // Success message
+      navigate('/homepage');
     } catch (error) {
       console.error('Error registering user:', error);
       alert('Error registering user. Please try again.');
     }
+    
   
   };
 

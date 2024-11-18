@@ -29,25 +29,35 @@ db.connect((err) => {
 });
 
 // Route to handle sign-up data
-app.post('/signup', (req, res) => {
+app.post('/', (req, res) => {
     const { userId, firstName, lastName, password } = req.body;
-  
-    const query = `
-      INSERT INTO User (UserID, FirstName, LastName, Password, Notes, Feelings) 
-      VALUES (?, ?, ?, ?, NULL, NULL)
-    `;
-    db.query(query, [userId, firstName, lastName, password], (err, results) => {
-      if (err) {
-        console.error('Error saving user data:', err.message);
-        res.status(500).send('Error saving user data.');
+    const query1 = `
+      SELECT * FROM User WHERE UserID = ?;`
+    db.query(query1, [userId], (err, results) => {
+      if (results.length != 0) {
+        console.error('User already exists');
+        // alert('User already exists! Use the login.')
+        res.status(200).send('User already exists. Use the login if that\'s you.');
+        return;
       } else {
-        res.status(200).send('User registered successfully!');
+        const query2 = `
+          INSERT INTO User (UserID, FirstName, LastName, Password, Notes, Feelings) 
+          VALUES (?, ?, ?, ?, NULL, NULL)
+        `;
+        db.query(query2, [userId, firstName, lastName, password], (err, results) => {
+          if (err) {
+            console.error('Error saving user data:', err.message);
+            res.status(500).send('Error saving user data.');
+          } else {
+            res.status(200).send('You picked a unique UserId! User registered successfully!');
+          }
+        });
       }
-    });
+    })
   });
   
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${3000}`);
+  console.log(`Server is running on http://localhost:${5000}`);
 });
