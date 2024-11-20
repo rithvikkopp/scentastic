@@ -32,9 +32,9 @@ const UserAuth = ({ switchToLogin }) => {
     };
   
     try {
-      const response = await axios.post('http://localhost:5000', userData);
+      const response = await axios.post('http://localhost:5000/users', userData);
       alert(response.data); // Success message
-      navigate('/homepage');
+      navigate('/homepage', { state: userData });
     } catch (error) {
       console.error('Error registering user:', error);
       alert('Error registering user. Please try again.');

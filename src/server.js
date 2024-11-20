@@ -29,7 +29,7 @@ db.connect((err) => {
 });
 
 // Route to handle sign-up data
-app.post('/', (req, res) => {
+app.post('/users', (req, res) => {
     const { userId, firstName, lastName, password } = req.body;
     const query1 = `
       SELECT * FROM User WHERE UserID = ?;`
@@ -52,6 +52,34 @@ app.post('/', (req, res) => {
             res.status(200).send('You picked a unique UserId! User registered successfully!');
           }
         });
+      }
+    })
+  });
+  app.delete('/users', (req, res) => {
+    const userId = req.query.userId; // Extract userId from query parameters
+  
+    const query1 = `DELETE FROM User WHERE UserID = ?;`;
+    db.query(query1, [userId], (err, results) => {
+      if (err) {
+        console.error('Error deleting user:', err.message);
+        res.status(500).send("Something went wrong. Please try again.");
+      } else if (results.affectedRows === 0) {
+        res.status(404).send("User not found.");
+      } else {
+        res.status(200).send('User successfully deleted! You will now be redirected to the Signup/Login.');
+      }
+    });
+  });
+
+  app.put('/users', (req, res) => {
+    const { userId, firstName, lastName, password , newUserID} = req.body;
+    const query1 = `UPDATE User SET UserID = ? WHERE UserID=?;`
+    console.log(userId);
+    db.query(query1, [newUserID, userId], (err, results) => {
+      if (err) {
+        res.status(500).send("Something went wrong. Please try again.");
+      } else {
+        res.status(200).send('User ID successfully updated! You will now be redirected to the Signup/Login.');
       }
     })
   });
