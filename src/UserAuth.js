@@ -34,7 +34,7 @@ const UserAuth = ({ switchToLogin }) => {
     try {
       const response = await axios.post('http://localhost:5000/users', userData);
       alert(response.data); // Success message
-      navigate('/homepage', { state: userData });
+      navigate('/quiz', { state: userData });
     } catch (error) {
       console.error('Error registering user:', error);
       alert('Error registering user. Please try again.');
@@ -154,7 +154,7 @@ const UserAuth = ({ switchToLogin }) => {
             Continue
           </Button>
           <hr style={{ border: "none", height: "2px", backgroundColor: "#D0BCFF", width: "70%" }} />
-          <Button
+          {/* <Button
             variant="contained"
             style={{
               background: "none",
@@ -166,7 +166,7 @@ const UserAuth = ({ switchToLogin }) => {
             }}
           >
             Sign Up With Google
-          </Button>
+          </Button> */}
         </form>
       </Grid>
 
