@@ -29,7 +29,7 @@ const Homepage = ({ switchToLogin }) => {
   
   const handleDelete = async (e) => {
     e.preventDefault();
-  
+    console.log(userData);
     try {
       if (pass === userData.password) {
         const response = await axios.delete('http://localhost:5000/users', {
@@ -72,9 +72,11 @@ const Homepage = ({ switchToLogin }) => {
       console.error('Error registering user:', error);
       alert('Error registering user. Please try again.');
     }
-    
-  
   };
+
+  const handleGoToQuiz = () => {
+    navigate('/quiz', { state: userData });
+  }
 
   return (
     <div style={{height: "100vh", display:"flex", alignItems: "center",flexDirection:"column", justifyContent:"space-evenly"}}>
@@ -94,6 +96,8 @@ const Homepage = ({ switchToLogin }) => {
         </div>
         
         <button style={{backgroundColor:"red"}} onClick={handleDelete}>Delete your Account</button>
+
+        <button style={{backgroundColor:"green"}} onClick={handleGoToQuiz}>Take Quiz again!</button>
     </div>
   );
 };

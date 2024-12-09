@@ -7,6 +7,8 @@ const Search = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [dupeData, setDupeData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inspirationData, setInspirationData] = useState("");
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -29,6 +31,24 @@ const Search = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+  
+  const handleInspirationClick = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/top-reviewer-notes"); 
+      setInspirationData(response.data); 
+      setIsModalOpen(true); 
+    } catch (err) {
+      console.error("Error fetching inspiration data:", err);
+      setError("Error fetching inspiration data.");
+    }
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -81,6 +101,56 @@ const Search = () => {
 
       {isLoading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
+
+      <button
+        onClick={handleInspirationClick}
+        style={{ padding: "10px", width: "100%", marginTop: "20px" }}
+      >
+        Need some inspiration?
+      </button>
+
+      {isModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              maxWidth: "500px",
+              width: "100%",
+            }}
+          >
+            <h2>Top Reviewers' Most Common Notes</h2>
+            {inspirationData ? (
+              <ul>
+                {inspirationData.map((note, index) => (
+                  <li key={index} style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
+                    <strong>{note.Note}</strong> - Count: {note.NoteCount}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No inspiration data available</p>
+            )}
+            <button onClick={closeModal} style={{ marginTop: "20px", padding: "10px" }}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <div style={{ marginTop: "20px" }}>
   {results.length > 0 ? (

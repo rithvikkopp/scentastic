@@ -58,19 +58,30 @@ app.post('/users', (req, res) => {
   app.delete('/users', (req, res) => {
     const userId = req.query.userId; // Extract userId from query parameters
   
-    const query1 = `DELETE FROM User WHERE UserID = ?;`;
+    // const query1 = `CALL DeleteUserAccount(?);`;
+    const query1 = `DELETE FROM User WHERE UserID = ?`;
     db.query(query1, [userId], (err, results) => {
       if (err) {
         console.error('Error deleting user:', err.message);
+        console.log(userId);
         res.status(500).send("Something went wrong. Please try again.");
-      } else if (results.affectedRows === 0) {
-        res.status(404).send("User not found.");
       } else {
         res.status(200).send('User successfully deleted! You will now be redirected to the Signup/Login.');
       }
     });
   });
 
+  app.get("/top-reviewer-notes", (req, res) => {
+    db.query("CALL AnalyzeTopNotes()", (err, results) => {
+      if (err) {
+        console.error("Error executing the stored procedure:", err);
+        return res.status(500).send("Error executing the analysis");
+      }
+      res.json(results[0]);
+    });
+  });
+
+  
   app.put('/users', (req, res) => {
     const { userId, firstName, lastName, password , newUserID} = req.body;
     const query1 = `UPDATE User SET UserID = ? WHERE UserID=?;`
@@ -165,8 +176,46 @@ app.post('/users', (req, res) => {
   })
     
   });
-  
 
+  app.put('/dupes-list', (req, res) => {
+    const {id} = req.body;
+    // console.log(id);
+
+  const query = `CALL getDupesForOne(?);`;
+  db.query(query, [id], (err, results) => {
+    if (err) {
+      console.error("Error while searching:", err.message);
+      res.status(500).send("Something went wrong searching.");
+    } else {
+      // console.log("Search results:", results);
+      if (Array.isArray(results)) {
+        res.status(200).json(results); // Send as JSON array
+      } else {
+        res.status(200).json([results]); // Wrap single result in an array
+      }
+    }
+  })
+    
+  });
+
+  app.put('/users-results', (req, res) => {
+    const { userId, firstName, lastName, password } = req.body;
+    // console.log(id);
+
+  const query = `SELECT * FROM UserRecommendedPerfumes WHERE UserId = ?;`;
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error("Error while searching:", err.message);
+      res.status(500).send("Something went wrong searching.");
+    } else {
+        res.status(200).json(results);
+      
+    }
+  })
+    
+  });
+  
+  
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${5000}`);

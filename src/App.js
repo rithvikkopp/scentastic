@@ -5,6 +5,7 @@ import UserAuthLogin from "./UserAuthLogin.js"; // Replace with the correct path
 import Homepage from "./homePage.js";
 import Quiz from "./quiz.js";
 import Search from "./search.js";
+import Results from "./Results.js"
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/homepage" element={<Homepage/>}/>
         <Route path="/quiz" element={<Quiz/>}/>
         <Route path="/search" element={<Search/>}/>
+        <Route path="/results" element={<Results/>}/>
       </Routes>
     </Router>
   );

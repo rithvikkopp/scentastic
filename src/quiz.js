@@ -15,60 +15,60 @@ const Quiz = () => {
       id: 1, 
       text: "How does a fresh morning feel to you?", 
       options: [
-        { text: "Refreshing", notes: "Earthy, green", feelings: "Invigorating" },
-        { text: "Soothing", notes: "Powdery, musky", feelings: "Soothing" },
-        { text: "Uplifting", notes: "Warm, gourmand", feelings: "Uplifting" },
-        { text: "Exotic", notes: "Smoky, herbal", feelings: "Exotic" }
+        { text: "Refreshing", notes: "Green", feelings: "Invigorating" },
+        { text: "Soothing", notes: "Powdery", feelings: "Soothing" },
+        { text: "Uplifting", notes: "Warm", feelings: "Uplifting" },
+        { text: "Exotic", notes: "Smoky", feelings: "Exotic" }
       ]
     },
     {
       id: 2,
       text: "What do you want to feel like when going out?",
       options: [
-        { text: "Bold", notes: "Smoky, herbal", feelings: "Exotic" },
-        { text: "Subtle", notes: "Powdery, musky", feelings: "Soothing" },
-        { text: "Elegant", notes: "Warm, gourmand", feelings: "Uplifting" },
-        { text: "Natural", notes: "Earthy, green", feelings: "Invigorating" }
+        { text: "Bold", notes: "Smoky", feelings: "Exotic" },
+        { text: "Subtle", notes: "Musky", feelings: "Soothing" },
+        { text: "Elegant", notes: "Rich", feelings: "Uplifting" },
+        { text: "Natural", notes: "Earthy", feelings: "Invigorating" }
       ]
     },
       {
         id: 3,
         text: "How do you want your daily perfume to make you feel?",
         options: [
-          { text: "Confident", notes: "Woody, spicy", feelings: "Empowering" },
-          { text: "Relaxed", notes: "Powdery, musky", feelings: "Calming" },
-          { text: "Energetic", notes: "Citrusy, fruity", feelings: "Invigorating" },
-          { text: "Comforted", notes: "Vanilla, warm", feelings: "Cozy" }
+          { text: "Confident", notes: "Spicy", feelings: "Empowering" },
+          { text: "Relaxed", notes: "Powdery", feelings: "Calming" },
+          { text: "Energetic", notes: "Citrusy", feelings: "Invigorating" },
+          { text: "Comforted", notes: "Vanilla", feelings: "Cozy" }
         ]
       },
       {
         id: 4,
         text: "What inspires you?",
         options: [
-          { text: "Nature", notes: "Green, earthy", feelings: "Refreshing" },
-          { text: "Luxury", notes: "Rich, oud", feelings: "Sophisticated" },
-          { text: "Energy", notes: "Citrusy, zesty", feelings: "Energizing" },
-          { text: "Calm", notes: "Lavender, soft woods", feelings: "Tranquil" }
+          { text: "Nature", notes: "Earthy", feelings: "Refreshing" },
+          { text: "Luxury", notes: "Rich", feelings: "Sophisticated" },
+          { text: "Energy", notes: "Citrusy", feelings: "Energizing" },
+          { text: "Calm", notes: "Lavender", feelings: "Soft" }
         ]
       },
       {
         id: 5,
         text: "What scent represents the perfect weekend getaway?",
         options: [
-          { text: "Rustic", notes: "Woody, smoky", feelings: "Adventurous" },
-          { text: "Relaxing", notes: "Aquatic, fresh", feelings: "Calming" },
-          { text: "Playful", notes: "Fruity, sweet", feelings: "Cheerful" },
-          { text: "Romantic", notes: "Floral, warm", feelings: "Loving" }
+          { text: "Rustic", notes: "Smoky", feelings: "Adventurous" },
+          { text: "Relaxing", notes: "Aquatic", feelings: "Calming" },
+          { text: "Playful", notes: "Fruity", feelings: "Cheerful" },
+          { text: "Romantic", notes: "Warm", feelings: "Loving" }
         ]
       },
       {
         id: 6,
         text: "What do you imagine when you think of springtime?",
         options: [
-          { text: "Blossoms", notes: "Floral, fresh", feelings: "Uplifting" },
-          { text: "Rain", notes: "Aquatic, earthy", feelings: "Refreshing" },
-          { text: "Sunshine", notes: "Citrusy, warm", feelings: "Energizing" },
-          { text: "New Beginnings", notes: "Herbal, green", feelings: "Hopeful" }
+          { text: "Blossoms", notes: "Fresh", feelings: "Soft" }, 
+          { text: "Rain", notes: "Earthy", feelings: "Refreshing" },
+          { text: "Sunshine", notes: "Warm", feelings: "Energizing" },
+          { text: "New Beginnings", notes: "Herbal", feelings: "Hopeful" }
         ]
       },
       {
@@ -126,7 +126,7 @@ const Quiz = () => {
         text: "What fragrance embodies energy for you?",
         options: [
           { text: "Zesty", notes: "Citrusy, spicy", feelings: "Invigorating" },
-          { text: "Green", notes: "Herbal, fresh", feelings: "Refreshing" },
+          { text: "Green", notes: "Herbal, Fresh", feelings: "Refreshing" },
           { text: "Bold", notes: "Woody, smoky", feelings: "Empowering" },
           { text: "Sweet", notes: "Fruity, gourmand", feelings: "Playful" }
         ]
@@ -176,7 +176,7 @@ const Quiz = () => {
         console.log(response1);
         if (response1.status == 200 && response2.status == 200) {
             console.log("Preferences saved successfully!");
-            navigate('/homepage', { state: userData });
+            navigate('/results', { state: userData });
         } else {
             console.error("Failed to save preferences.");
         }
